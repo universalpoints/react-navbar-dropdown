@@ -4,19 +4,20 @@ import onClickOutside from 'react-onclickoutside';
 
 // TODO: Centering
 // TODO: Animation
+// TODO: Hover or Click
 
-export interface FlexDropdownProps { }
+export interface NavbarDropdownProps { }
 
-interface FlexDropdownState {
+interface NavbarDropdownState {
   open: boolean;
 }
 
-const _FlexDropdown = styled.div`
+const _NavbarDropdown = styled.div`
   position: relative;
 `;
 
-class FlexDropdown extends React.Component<FlexDropdownProps, FlexDropdownState> {
-  constructor(props: FlexDropdownProps) {
+class NavbarDropdown extends React.Component<NavbarDropdownProps, NavbarDropdownState> {
+  constructor(props: NavbarDropdownProps) {
     super(props);
     this.state = {
       open: false
@@ -43,44 +44,44 @@ class FlexDropdown extends React.Component<FlexDropdownProps, FlexDropdownState>
 
   render() {
     const toggle = React.Children.toArray(this.props.children).find(child =>
-      React.isValidElement(child) && child.type === FlexDropdownToggle
+      React.isValidElement(child) && child.type === NavbarDropdownToggle
     );
     const toggleWithProps = React.cloneElement(toggle as React.ReactElement, {
       _open: this.state.open,
       _onClickToggle: this.handleClickToggle.bind(this)
     });
     const menu = React.Children.toArray(this.props.children).find(child =>
-      React.isValidElement(child) && child.type === FlexDropdownMenu
+      React.isValidElement(child) && child.type === NavbarDropdownMenu
     );
     const menuWithProps = React.cloneElement(menu as React.ReactElement, {
       _onClickItem: this.handleClickItem.bind(this)
     });
 
     return (
-      <_FlexDropdown>
+      <_NavbarDropdown>
         {toggleWithProps}
         {this.state.open && menuWithProps}
-      </_FlexDropdown>
+      </_NavbarDropdown>
     );
   }
 }
 
-export default onClickOutside(FlexDropdown);
+export default onClickOutside(NavbarDropdown);
 
-export interface FlexDropdownToggleProps {
+export interface NavbarDropdownToggleProps {
   _open?: boolean;
   _onClickToggle?: () => void;
 }
 
-export const FlexDropdownToggle: React.FC<FlexDropdownToggleProps> = props => {
+export const NavbarDropdownToggle: React.FC<NavbarDropdownToggleProps> = props => {
   const open = React.Children.toArray(props.children).find(child =>
-    React.isValidElement(child) && child.type === FlexDropdownOpen
+    React.isValidElement(child) && child.type === NavbarDropdownOpen
   );
   const openWithProps = React.cloneElement(open as React.ReactElement, {
     _onClickToggle: () => props._onClickToggle!()
   });
   const close = React.Children.toArray(props.children).find(child =>
-    React.isValidElement(child) && child.type === FlexDropdownClose
+    React.isValidElement(child) && child.type === NavbarDropdownClose
   );
   const closeWithProps = React.cloneElement(close as React.ReactElement, {
     _onClickToggle: () => props._onClickToggle!()
@@ -89,55 +90,55 @@ export const FlexDropdownToggle: React.FC<FlexDropdownToggleProps> = props => {
   return props._open ? closeWithProps : openWithProps;
 };
 
-export interface FlexDropdownOpenProps {
+export interface NavbarDropdownOpenProps {
   className?: string;
   style?: React.CSSProperties;
   _onClickToggle?: () => void;
 }
 
-const _FlexDropdownOpen = styled.div`
+const _NavbarDropdownOpen = styled.div`
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const FlexDropdownOpen: React.FC<FlexDropdownOpenProps> = props => {
+export const NavbarDropdownOpen: React.FC<NavbarDropdownOpenProps> = props => {
   return (
-    <_FlexDropdownOpen
+    <_NavbarDropdownOpen
       className={props.className ? props.className : ''}
       style={props.style ? props.style : {}}
       onClick={() => props._onClickToggle!()}
     >
       {props.children}
-    </_FlexDropdownOpen>
+    </_NavbarDropdownOpen>
   );
 };
 
-export interface FlexDropdownCloseProps {
+export interface NavbarDropdownCloseProps {
   className?: string;
   style?: React.CSSProperties;
   _onClickToggle?: () => void;
 }
 
-const _FlexDropdownClose = styled.div`
+const _NavbarDropdownClose = styled.div`
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const FlexDropdownClose: React.FC<FlexDropdownCloseProps> = props => {
+export const NavbarDropdownClose: React.FC<NavbarDropdownCloseProps> = props => {
   return (
-    <_FlexDropdownClose
+    <_NavbarDropdownClose
       className={props.className ? props.className : ''}
       style={props.style ? props.style : {}}
       onClick={() => props._onClickToggle!()}
     >
       {props.children}
-    </_FlexDropdownClose>
+    </_NavbarDropdownClose>
   );
 };
 
-export interface FlexDropdownMenuProps {
+export interface NavbarDropdownMenuProps {
   className?: string;
   style?: React.CSSProperties;
   interval: string;
@@ -145,12 +146,12 @@ export interface FlexDropdownMenuProps {
   _onClickItem?: () => void;
 }
 
-const _FlexDropdownMenu = styled.div`
+const _NavbarDropdownMenu = styled.div`
   position: absolute;
   width: max-content;
 `;
 
-export const FlexDropdownMenu: React.FC<FlexDropdownMenuProps> = props => {
+export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = props => {
   let style: React.CSSProperties = {
     top: `calc(100% + ${props.interval})`
   };
@@ -163,7 +164,7 @@ export const FlexDropdownMenu: React.FC<FlexDropdownMenuProps> = props => {
   const children = React.Children.map(props.children, child => {
     if (
       React.isValidElement(child) &&
-      (child.type === FlexDropdownContainer || child.type === FlexDropdownItem)
+      (child.type === NavbarDropdownContainer || child.type === NavbarDropdownItem)
     ) {
       return React.cloneElement(child, {
         _onClickItem: () => props._onClickItem!()
@@ -174,28 +175,28 @@ export const FlexDropdownMenu: React.FC<FlexDropdownMenuProps> = props => {
   });
 
   return (
-    <_FlexDropdownMenu style={style}>
+    <_NavbarDropdownMenu style={style}>
       <div
         className={props.className ? props.className : ''}
         style={props.style ? props.style : {}}
       >
         {children}
       </div>
-    </_FlexDropdownMenu>
+    </_NavbarDropdownMenu>
   );
 };
 
-export interface FlexDropdownContainerProps {
+export interface NavbarDropdownContainerProps {
   className?: string;
   style?: React.CSSProperties;
   _onClickItem?: () => void;
 }
 
-export const FlexDropdownContainer: React.FC<FlexDropdownContainerProps> = props => {
+export const NavbarDropdownContainer: React.FC<NavbarDropdownContainerProps> = props => {
   const children = React.Children.map(props.children, child => {
     if (
       React.isValidElement(child) &&
-      (child.type === FlexDropdownContainer || child.type === FlexDropdownItem)
+      (child.type === NavbarDropdownContainer || child.type === NavbarDropdownItem)
     ) {
       return React.cloneElement(child, {
         _onClickItem: () => props._onClickItem!()
@@ -215,22 +216,22 @@ export const FlexDropdownContainer: React.FC<FlexDropdownContainerProps> = props
   );
 };
 
-export interface FlexDropdownItemProps {
+export interface NavbarDropdownItemProps {
   className?: string;
   style?: React.CSSProperties;
   onClick?: (e: React.MouseEvent) => void;
   _onClickItem?: () => void;
 }
 
-const _FlexDropdownItem = styled.div`
+const _NavbarDropdownItem = styled.div`
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const FlexDropdownItem: React.FC<FlexDropdownItemProps> = props => {
+export const NavbarDropdownItem: React.FC<NavbarDropdownItemProps> = props => {
   return (
-    <_FlexDropdownItem
+    <_NavbarDropdownItem
       className={props.className ? props.className : ''}
       style={props.style ? props.style : {}}
       onClick={e => {
@@ -239,6 +240,6 @@ export const FlexDropdownItem: React.FC<FlexDropdownItemProps> = props => {
       }}
     >
       {props.children}
-    </_FlexDropdownItem>
+    </_NavbarDropdownItem>
   );
 };

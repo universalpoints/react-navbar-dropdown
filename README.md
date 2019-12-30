@@ -1,4 +1,4 @@
-# react-flex-dropdown
+# react-navbar-dropdown
 
 This npm-package provides a dropdown component for React.
 The dropdown component is flexible for many use cases.
@@ -7,10 +7,10 @@ The dropdown component is flexible for many use cases.
 
 ```console
 // with npm
-$ npm install --save react-flex-dropdown
+$ npm install --save react-navbar-dropdown
 
 // with yarn
-$ yarn add react-flex-dropdown
+$ yarn add react-navbar-dropdown
 ```
 
 ## Examples
@@ -19,22 +19,22 @@ $ yarn add react-flex-dropdown
 
 ```javascript
 // in jsx
-<FlexDropdown>
-  <FlexDropdown.Toggle>
-    <FlexDropdown.Open className="menu__item">
+<NavbarDropdown>
+  <NavbarDropdown.Toggle>
+    <NavbarDropdown.Open className="menu__item">
       <FontAwesomeIcon icon={faCaretDown} fixedWidth />
-    </FlexDropdown.Open>
-    <FlexDropdown.Close className="menu__item">
+    </NavbarDropdown.Open>
+    <NavbarDropdown.Close className="menu__item">
       <FontAwesomeIcon icon={faCaretUp} fixedWidth />
-    </FlexDropdown.Close>
-  </FlexDropdown.Toggle>
-  <FlexDropdown.Menu className="example1-dropdown-menu" interval="4px" align="right">
-    <FlexDropdown.Item className="example1-dropdown-menu__item">Item 1</FlexDropdown.Item>
-    <FlexDropdown.Item className="example1-dropdown-menu__item">Item 2</FlexDropdown.Item>
-    <FlexDropdown.Item className="example1-dropdown-menu__item">Item 3</FlexDropdown.Item>
-    <FlexDropdown.Item className="example1-dropdown-menu__item">Item 4</FlexDropdown.Item>
-  </FlexDropdown.Menu>
-</FlexDropdown>
+    </NavbarDropdown.Close>
+  </NavbarDropdown.Toggle>
+  <NavbarDropdown.Menu className="example1-dropdown-menu" interval="4px" align="right">
+    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 1</NavbarDropdown.Item>
+    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 2</NavbarDropdown.Item>
+    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 3</NavbarDropdown.Item>
+    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 4</NavbarDropdown.Item>
+  </NavbarDropdown.Menu>
+</NavbarDropdown>
 ```
 
 ```scss
@@ -66,52 +66,52 @@ $ yarn add react-flex-dropdown
 }
 ```
 
-[Result](https://riswu.github.io/react-flex-dropdown-examples/#/example1)
+[Result](https://riswu.github.io/react-navbar-dropdown-examples/#/example1)
 
 ### Example 2
 
 ```javascript
 // in jsx
-<FlexDropdown>
-  <FlexDropdown.Toggle>
-    <FlexDropdown.Open className="menu__item">
+<NavbarDropdown>
+  <NavbarDropdown.Toggle>
+    <NavbarDropdown.Open className="menu__item">
       <FontAwesomeIcon icon={faBars} fixedWidth />
-    </FlexDropdown.Open>
-    <FlexDropdown.Close className="menu__item">
+    </NavbarDropdown.Open>
+    <NavbarDropdown.Close className="menu__item">
       <FontAwesomeIcon icon={faTimes} fixedWidth />
-    </FlexDropdown.Close>
-  </FlexDropdown.Toggle>
-  <FlexDropdown.Menu className="example2-dropdown-menu" interval="4px" align="right">
-    <FlexDropdown.Container className="example2-dropdown-menu__row">
-      <FlexDropdown.Item
+    </NavbarDropdown.Close>
+  </NavbarDropdown.Toggle>
+  <NavbarDropdown.Menu className="example2-dropdown-menu" interval="4px" align="right">
+    <NavbarDropdown.Container className="example2-dropdown-menu__row">
+      <NavbarDropdown.Item
         className="example2-dropdown-menu__item"
         style={{ backgroundColor: 'lightblue' }}
       >
         Item 1
-      </FlexDropdown.Item>
-      <FlexDropdown.Item
+      </NavbarDropdown.Item>
+      <NavbarDropdown.Item
         className="example2-dropdown-menu__item"
         style={{ backgroundColor: 'lightgreen' }}
       >
         Item 2
-      </FlexDropdown.Item>
-    </FlexDropdown.Container>
-    <FlexDropdown.Container className="example2-dropdown-menu__row">
-      <FlexDropdown.Item
+      </NavbarDropdown.Item>
+    </NavbarDropdown.Container>
+    <NavbarDropdown.Container className="example2-dropdown-menu__row">
+      <NavbarDropdown.Item
         className="example2-dropdown-menu__item"
         style={{ backgroundColor: 'orange' }}
       >
         Item 3
-      </FlexDropdown.Item>
-      <FlexDropdown.Item
+      </NavbarDropdown.Item>
+      <NavbarDropdown.Item
         className="example2-dropdown-menu__item"
         style={{ backgroundColor: 'greenyellow' }}
       >
         Item 4
-      </FlexDropdown.Item>
-    </FlexDropdown.Container>
-  </FlexDropdown.Menu>
-</FlexDropdown>
+      </NavbarDropdown.Item>
+    </NavbarDropdown.Container>
+  </NavbarDropdown.Menu>
+</NavbarDropdown>
 ```
 
 ```scss
@@ -144,8 +144,8 @@ $ yarn add react-flex-dropdown
 }
 ```
 
-[Result](https://riswu.github.io/react-flex-dropdown-examples/#/example2)
+[Result](https://riswu.github.io/react-navbar-dropdown-examples/#/example2)
 
 ## License
 
-react-flex-dropdown is released under the MIT license.
+react-navbar-dropdown is released under the MIT license.

@@ -1,7 +1,7 @@
 {
-  "name": "react-flex-dropdown",
+  "name": "react-navbar-dropdown",
   "version": "1.0.0",
-  "description": "Flexible dropdown component for React.",
+  "description": "This is a flexible dropdown component for navigation bars for React.",
   "keywords": [
     "react",
     "react component",
@@ -14,6 +14,7 @@
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
+  "repository": "https://github.com/riswu/react-navbar-dropdown",
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^16.9.17",

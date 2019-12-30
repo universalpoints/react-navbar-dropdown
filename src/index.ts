@@ -1,18 +1,18 @@
 import {
-  default as _FlexDropdown,
-  FlexDropdownToggle,
-  FlexDropdownOpen,
-  FlexDropdownClose,
-  FlexDropdownMenu,
-  FlexDropdownContainer,
-  FlexDropdownItem
-} from './flex-dropdown';
+  default as _NavbarDropdown,
+  NavbarDropdownToggle,
+  NavbarDropdownOpen,
+  NavbarDropdownClose,
+  NavbarDropdownMenu,
+  NavbarDropdownContainer,
+  NavbarDropdownItem
+} from './navbar-dropdown';
 
-export default class FlexDropdown extends _FlexDropdown {
-  static Toggle = FlexDropdownToggle;
-  static Open = FlexDropdownOpen;
-  static Close = FlexDropdownClose;
-  static Menu = FlexDropdownMenu;
-  static Container = FlexDropdownContainer;
-  static Item = FlexDropdownItem;
+export default class NavbarDropdown extends _NavbarDropdown {
+  static Toggle = NavbarDropdownToggle;
+  static Open = NavbarDropdownOpen;
+  static Close = NavbarDropdownClose;
+  static Menu = NavbarDropdownMenu;
+  static Container = NavbarDropdownContainer;
+  static Item = NavbarDropdownItem;
 }
