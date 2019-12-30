@@ -71,21 +71,14 @@ return (
 .example1-dropdown-menu {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  margin: 0px;
   padding: 8px 0px;
   background-color: white;
   border-radius: 3px;
   box-shadow: 0px 0px 5px #D8D9DA;
 
   &__item {
-    display: block;
-    box-sizing: border-box;
-    margin: 0px;
     padding: 6px 32px;
-    text-decoration: none;
     font-size: 12px;
-    font-weight: normal;
     color: #383838;
 
     &:hover {
@@ -166,7 +159,6 @@ return (
 .example2-dropdown-menu {
   display: flex;
   flex-direction: column;
-  margin: 0px;
   padding: 8px 8px;
   background-color: white;
   border-radius: 3px;
@@ -187,6 +179,10 @@ return (
     width: 80px;
     font-size: 12px;
     color: #383838;
+
+    &:hover {
+      box-shadow: 0px 0px 3px #D8D9DA;
+    }
   }
 }
 // ...
