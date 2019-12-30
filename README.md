@@ -19,26 +19,55 @@ $ yarn add react-navbar-dropdown
 
 ```javascript
 // in jsx
-<NavbarDropdown>
-  <NavbarDropdown.Toggle>
-    <NavbarDropdown.Open className="menu__item">
-      <FontAwesomeIcon icon={faCaretDown} fixedWidth />
-    </NavbarDropdown.Open>
-    <NavbarDropdown.Close className="menu__item">
-      <FontAwesomeIcon icon={faCaretUp} fixedWidth />
-    </NavbarDropdown.Close>
-  </NavbarDropdown.Toggle>
-  <NavbarDropdown.Menu className="example1-dropdown-menu" between="4px" align="right">
-    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 1</NavbarDropdown.Item>
-    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 2</NavbarDropdown.Item>
-    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 3</NavbarDropdown.Item>
-    <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 4</NavbarDropdown.Item>
-  </NavbarDropdown.Menu>
-</NavbarDropdown>
+// ...
+return (
+  <NavbarDropdown>
+    <NavbarDropdown.Toggle>
+      <NavbarDropdown.Open className="menu__item">
+        <FontAwesomeIcon icon={faCaretDown} fixedWidth />
+      </NavbarDropdown.Open>
+      <NavbarDropdown.Close className="menu__item">
+        <FontAwesomeIcon icon={faCaretUp} fixedWidth />
+      </NavbarDropdown.Close>
+    </NavbarDropdown.Toggle>
+    <NavbarDropdown.Menu
+      className="example1-dropdown-menu"
+      between="4px"
+      align="right"
+    >
+      <NavbarDropdown.Item
+        className="example1-dropdown-menu__item"
+        onClick={() => alert('Item 1: clicked!')}
+      >
+        Item 1
+      </NavbarDropdown.Item>
+      <NavbarDropdown.Item
+        className="example1-dropdown-menu__item"
+        onClick={() => alert('Item 2: clicked!')}
+      >
+        Item 2
+      </NavbarDropdown.Item>
+      <NavbarDropdown.Item
+        className="example1-dropdown-menu__item"
+        onClick={() => alert('Item 3: clicked!')}
+      >
+        Item 3
+      </NavbarDropdown.Item>
+      <NavbarDropdown.Item
+        className="example1-dropdown-menu__item"
+        onClick={() => alert('Item 4: clicked!')}
+      >
+        Item 4
+      </NavbarDropdown.Item>
+    </NavbarDropdown.Menu>
+  </NavbarDropdown>
+);
+// ...
 ```
 
 ```scss
 // in scss
+// ...
 .example1-dropdown-menu {
   display: flex;
   flex-direction: column;
@@ -64,6 +93,7 @@ $ yarn add react-navbar-dropdown
     }
   }
 }
+// ...
 ```
 
 [Result](https://riswu.github.io/react-navbar-dropdown-examples/#/example1)
@@ -72,50 +102,67 @@ $ yarn add react-navbar-dropdown
 
 ```javascript
 // in jsx
-<NavbarDropdown>
-  <NavbarDropdown.Toggle>
-    <NavbarDropdown.Open className="menu__item">
-      <FontAwesomeIcon icon={faBars} fixedWidth />
-    </NavbarDropdown.Open>
-    <NavbarDropdown.Close className="menu__item">
-      <FontAwesomeIcon icon={faTimes} fixedWidth />
-    </NavbarDropdown.Close>
-  </NavbarDropdown.Toggle>
-  <NavbarDropdown.Menu className="example2-dropdown-menu" between="4px" align="right">
-    <NavbarDropdown.Container className="example2-dropdown-menu__row">
-      <NavbarDropdown.Item
-        className="example2-dropdown-menu__item"
-        style={{ backgroundColor: 'lightblue' }}
+// ...
+return (
+  <NavbarDropdown>
+    <NavbarDropdown.Toggle>
+      <NavbarDropdown.Open className="menu__item">
+        <FontAwesomeIcon icon={faBars} fixedWidth />
+      </NavbarDropdown.Open>
+      <NavbarDropdown.Close className="menu__item">
+        <FontAwesomeIcon icon={faTimes} fixedWidth />
+      </NavbarDropdown.Close>
+    </NavbarDropdown.Toggle>
+    <NavbarDropdown.Menu
+      className="example2-dropdown-menu"
+      between="4px"
+      align="right"
+    >
+      <NavbarDropdown.Container
+        className="example2-dropdown-menu__row"
       >
-        Item 1
-      </NavbarDropdown.Item>
-      <NavbarDropdown.Item
-        className="example2-dropdown-menu__item"
-        style={{ backgroundColor: 'lightgreen' }}
+        <NavbarDropdown.Item
+          className="example2-dropdown-menu__item"
+          style={{ backgroundColor: 'lightblue' }}
+          onClick={() => alert('Item 1: clicked!')}
+        >
+          Item 1
+        </NavbarDropdown.Item>
+        <NavbarDropdown.Item
+          className="example2-dropdown-menu__item"
+          style={{ backgroundColor: 'lightgreen' }}
+          onClick={() => alert('Item 2: clicked!')}
+        >
+          Item 2
+        </NavbarDropdown.Item>
+      </NavbarDropdown.Container>
+      <NavbarDropdown.Container
+        className="example2-dropdown-menu__row"
       >
-        Item 2
-      </NavbarDropdown.Item>
-    </NavbarDropdown.Container>
-    <NavbarDropdown.Container className="example2-dropdown-menu__row">
-      <NavbarDropdown.Item
-        className="example2-dropdown-menu__item"
-        style={{ backgroundColor: 'orange' }}
-      >
-        Item 3
-      </NavbarDropdown.Item>
-      <NavbarDropdown.Item
-        className="example2-dropdown-menu__item"
-        style={{ backgroundColor: 'greenyellow' }}
-      >
-        Item 4
-      </NavbarDropdown.Item>
-    </NavbarDropdown.Container>
-  </NavbarDropdown.Menu>
-</NavbarDropdown>
+        <NavbarDropdown.Item
+          className="example2-dropdown-menu__item"
+          style={{ backgroundColor: 'orange' }}
+          onClick={() => alert('Item 3: clicked!')}
+        >
+          Item 3
+        </NavbarDropdown.Item>
+        <NavbarDropdown.Item
+          className="example2-dropdown-menu__item"
+          style={{ backgroundColor: 'greenyellow' }}
+          onClick={() => alert('Item 4: clicked!')}
+        >
+          Item 4
+        </NavbarDropdown.Item>
+      </NavbarDropdown.Container>
+    </NavbarDropdown.Menu>
+  </NavbarDropdown>
+);
+// ...
 ```
 
 ```scss
 // in scss
+// ...
 .example2-dropdown-menu {
   display: flex;
   flex-direction: column;
@@ -142,6 +189,7 @@ $ yarn add react-navbar-dropdown
     color: #383838;
   }
 }
+// ...
 ```
 
 [Result](https://riswu.github.io/react-navbar-dropdown-examples/#/example2)
