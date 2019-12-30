@@ -28,7 +28,7 @@ $ yarn add react-navbar-dropdown
       <FontAwesomeIcon icon={faCaretUp} fixedWidth />
     </NavbarDropdown.Close>
   </NavbarDropdown.Toggle>
-  <NavbarDropdown.Menu className="example1-dropdown-menu" interval="4px" align="right">
+  <NavbarDropdown.Menu className="example1-dropdown-menu" between="4px" align="right">
     <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 1</NavbarDropdown.Item>
     <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 2</NavbarDropdown.Item>
     <NavbarDropdown.Item className="example1-dropdown-menu__item">Item 3</NavbarDropdown.Item>
@@ -81,7 +81,7 @@ $ yarn add react-navbar-dropdown
       <FontAwesomeIcon icon={faTimes} fixedWidth />
     </NavbarDropdown.Close>
   </NavbarDropdown.Toggle>
-  <NavbarDropdown.Menu className="example2-dropdown-menu" interval="4px" align="right">
+  <NavbarDropdown.Menu className="example2-dropdown-menu" between="4px" align="right">
     <NavbarDropdown.Container className="example2-dropdown-menu__row">
       <NavbarDropdown.Item
         className="example2-dropdown-menu__item"

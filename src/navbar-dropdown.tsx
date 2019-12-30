@@ -141,7 +141,7 @@ export const NavbarDropdownClose: React.FC<NavbarDropdownCloseProps> = props => 
 export interface NavbarDropdownMenuProps {
   className?: string;
   style?: React.CSSProperties;
-  interval: string;
+  between: string;
   align: 'left' | 'right';
   _onClickItem?: () => void;
 }
@@ -153,7 +153,7 @@ const _NavbarDropdownMenu = styled.div`
 
 export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = props => {
   let style: React.CSSProperties = {
-    top: `calc(100% + ${props.interval})`
+    top: `calc(100% + ${props.between})`
   };
   if (props.align === 'left') {
     style = Object.assign(style, { left: '0px' });
