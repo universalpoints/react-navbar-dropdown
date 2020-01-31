@@ -100,7 +100,7 @@ return (
   <NavbarDropdown>
     <NavbarDropdown.Toggle>
       <NavbarDropdown.Open className="menu__item">
-        <FontAwesomeIcon icon={faBars} fixedWidth />
+        <FontAwesomeIcon icon={faTh} fixedWidth />
       </NavbarDropdown.Open>
       <NavbarDropdown.Close className="menu__item">
         <FontAwesomeIcon icon={faTimes} fixedWidth />
@@ -111,9 +111,7 @@ return (
       between="4px"
       align="right"
     >
-      <NavbarDropdown.Container
-        className="example2-dropdown-menu__row"
-      >
+      <div className="example2-dropdown-menu__row">
         <NavbarDropdown.Item
           className="example2-dropdown-menu__item"
           style={{ backgroundColor: 'lightblue' }}
@@ -128,10 +126,8 @@ return (
         >
           Item 2
         </NavbarDropdown.Item>
-      </NavbarDropdown.Container>
-      <NavbarDropdown.Container
-        className="example2-dropdown-menu__row"
-      >
+      </div>
+      <div className="example2-dropdown-menu__row">
         <NavbarDropdown.Item
           className="example2-dropdown-menu__item"
           style={{ backgroundColor: 'orange' }}
@@ -146,7 +142,7 @@ return (
         >
           Item 4
         </NavbarDropdown.Item>
-      </NavbarDropdown.Container>
+      </div>
     </NavbarDropdown.Menu>
   </NavbarDropdown>
 );

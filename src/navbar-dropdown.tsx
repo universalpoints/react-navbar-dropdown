@@ -1,23 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import onClickOutside from 'react-onclickoutside';
 
 // TODO: Centering
 // TODO: Animation
 // TODO: Hover or Click
 
-export interface NavbarDropdownProps { }
+interface NavbarDropdownContext {
+  open: boolean;
+  handleClickToggle: () => void;
+  handleClickItem: () => void;
+  handleClickOutside: () => void;
+}
+
+const ContextStore = React.createContext<Partial<NavbarDropdownContext>>({});
 
 interface NavbarDropdownState {
   open: boolean;
 }
 
-const _NavbarDropdown = styled.div`
-  position: relative;
-`;
-
-class NavbarDropdown extends React.Component<NavbarDropdownProps, NavbarDropdownState> {
-  constructor(props: NavbarDropdownProps) {
+export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       open: false
@@ -46,95 +48,92 @@ class NavbarDropdown extends React.Component<NavbarDropdownProps, NavbarDropdown
     const toggle = React.Children.toArray(this.props.children).find(child =>
       React.isValidElement(child) && child.type === NavbarDropdownToggle
     );
-    const toggleWithProps = React.cloneElement(toggle as React.ReactElement, {
-      _open: this.state.open,
-      _onClickToggle: this.handleClickToggle.bind(this)
-    });
     const menu = React.Children.toArray(this.props.children).find(child =>
       React.isValidElement(child) && child.type === NavbarDropdownMenu
     );
-    const menuWithProps = React.cloneElement(menu as React.ReactElement, {
-      _onClickItem: this.handleClickItem.bind(this)
-    });
+
+    const contextValue = {
+      open: this.state.open,
+      handleClickToggle: this.handleClickToggle.bind(this),
+      handleClickItem: this.handleClickItem.bind(this),
+      handleClickOutside: this.handleClickOutside.bind(this)
+    };
+
+    const StyledNavbarDropdown = styled.div`
+      position: relative;
+    `;
 
     return (
-      <_NavbarDropdown>
-        {toggleWithProps}
-        {this.state.open && menuWithProps}
-      </_NavbarDropdown>
+      <ContextStore.Provider value={contextValue}>
+        <StyledNavbarDropdown>
+          {toggle}
+          {this.state.open && menu}
+        </StyledNavbarDropdown>
+      </ContextStore.Provider>
     );
   }
 }
 
-export default onClickOutside(NavbarDropdown);
-
-export interface NavbarDropdownToggleProps {
-  _open?: boolean;
-  _onClickToggle?: () => void;
-}
-
-export const NavbarDropdownToggle: React.FC<NavbarDropdownToggleProps> = props => {
+export const NavbarDropdownToggle: React.FC = props => {
   const open = React.Children.toArray(props.children).find(child =>
     React.isValidElement(child) && child.type === NavbarDropdownOpen
   );
-  const openWithProps = React.cloneElement(open as React.ReactElement, {
-    _onClickToggle: () => props._onClickToggle!()
-  });
   const close = React.Children.toArray(props.children).find(child =>
     React.isValidElement(child) && child.type === NavbarDropdownClose
   );
-  const closeWithProps = React.cloneElement(close as React.ReactElement, {
-    _onClickToggle: () => props._onClickToggle!()
-  });
 
-  return props._open ? closeWithProps : openWithProps;
+  const contextValue = React.useContext(ContextStore);
+
+  return contextValue.open! ? close as React.ReactElement : open as React.ReactElement;
 };
 
 export interface NavbarDropdownOpenProps {
   className?: string;
   style?: React.CSSProperties;
-  _onClickToggle?: () => void;
 }
 
-const _NavbarDropdownOpen = styled.div`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export const NavbarDropdownOpen: React.FC<NavbarDropdownOpenProps> = props => {
+  const contextValue = React.useContext(ContextStore);
+
+  const StyledNavbarDropdownOpen = styled.div`
+    &:hover {
+      cursor: pointer;
+    }
+  `;
+
   return (
-    <_NavbarDropdownOpen
+    <StyledNavbarDropdownOpen
       className={props.className ? props.className : ''}
       style={props.style ? props.style : {}}
-      onClick={() => props._onClickToggle!()}
+      onClick={() => contextValue.handleClickToggle!()}
     >
       {props.children}
-    </_NavbarDropdownOpen>
+    </StyledNavbarDropdownOpen>
   );
 };
 
 export interface NavbarDropdownCloseProps {
   className?: string;
   style?: React.CSSProperties;
-  _onClickToggle?: () => void;
 }
 
-const _NavbarDropdownClose = styled.div`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export const NavbarDropdownClose: React.FC<NavbarDropdownCloseProps> = props => {
+  const contextValue = React.useContext(ContextStore);
+
+  const StyledNavbarDropdownClose = styled.div`
+    &:hover {
+      cursor: pointer;
+    }
+  `;
+
   return (
-    <_NavbarDropdownClose
+    <StyledNavbarDropdownClose
       className={props.className ? props.className : ''}
       style={props.style ? props.style : {}}
-      onClick={() => props._onClickToggle!()}
+      onClick={() => contextValue.handleClickToggle!()}
     >
       {props.children}
-    </_NavbarDropdownClose>
+    </StyledNavbarDropdownClose>
   );
 };
 
@@ -143,13 +142,7 @@ export interface NavbarDropdownMenuProps {
   style?: React.CSSProperties;
   between: string;
   align: 'left' | 'right';
-  _onClickItem?: () => void;
 }
-
-const _NavbarDropdownMenu = styled.div`
-  position: absolute;
-  width: max-content;
-`;
 
 export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = props => {
   let style: React.CSSProperties = {
@@ -161,58 +154,35 @@ export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = props => {
     style = Object.assign(style, { right: '0px' });
   }
 
-  const children = React.Children.map(props.children, child => {
-    if (
-      React.isValidElement(child) &&
-      (child.type === NavbarDropdownContainer || child.type === NavbarDropdownItem)
-    ) {
-      return React.cloneElement(child, {
-        _onClickItem: () => props._onClickItem!()
-      });
-    } else {
-      return child;
+  const ref = React.useRef<HTMLDivElement>(null);
+  const contextValue = React.useContext(ContextStore);
+  const handleClickOutside = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      contextValue.handleClickOutside!();
     }
+  };
+  document.addEventListener
+  React.useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
   });
 
+  const StyledNavbarDropdownMenu = styled.div`
+    position: absolute;
+    width: max-content;
+  `;
+
   return (
-    <_NavbarDropdownMenu style={style}>
+    <StyledNavbarDropdownMenu ref={ref} style={style}>
       <div
         className={props.className ? props.className : ''}
         style={props.style ? props.style : {}}
       >
-        {children}
+        {props.children}
       </div>
-    </_NavbarDropdownMenu>
-  );
-};
-
-export interface NavbarDropdownContainerProps {
-  className?: string;
-  style?: React.CSSProperties;
-  _onClickItem?: () => void;
-}
-
-export const NavbarDropdownContainer: React.FC<NavbarDropdownContainerProps> = props => {
-  const children = React.Children.map(props.children, child => {
-    if (
-      React.isValidElement(child) &&
-      (child.type === NavbarDropdownContainer || child.type === NavbarDropdownItem)
-    ) {
-      return React.cloneElement(child, {
-        _onClickItem: () => props._onClickItem!()
-      });
-    } else {
-      return child;
-    }
-  });
-
-  return (
-    <div
-      className={props.className ? props.className : ''}
-      style={props.style ? props.style : {}}
-    >
-      {children}
-    </div>
+    </StyledNavbarDropdownMenu>
   );
 };
 
@@ -220,26 +190,27 @@ export interface NavbarDropdownItemProps {
   className?: string;
   style?: React.CSSProperties;
   onClick?: (e: React.MouseEvent) => void;
-  _onClickItem?: () => void;
 }
 
-const _NavbarDropdownItem = styled.div`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export const NavbarDropdownItem: React.FC<NavbarDropdownItemProps> = props => {
+  const contextValue = React.useContext(ContextStore);
+
+  const StyledNavbarDropdownItem = styled.div`
+    &:hover {
+      cursor: pointer;
+    }
+  `;
+
   return (
-    <_NavbarDropdownItem
+    <StyledNavbarDropdownItem
       className={props.className ? props.className : ''}
       style={props.style ? props.style : {}}
       onClick={e => {
         if (props.onClick) props.onClick(e);
-        props._onClickItem!();
+        contextValue.handleClickItem!();
       }}
     >
       {props.children}
-    </_NavbarDropdownItem>
+    </StyledNavbarDropdownItem>
   );
 };
