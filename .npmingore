@@ -1,3 +1,5 @@
-.gitignore
+.DS_Store
+.log
 src
+.gitignore
 tsconfig.json
