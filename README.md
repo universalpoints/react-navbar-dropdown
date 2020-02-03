@@ -19,7 +19,6 @@ $ yarn add react-navbar-dropdown
 
 ```javascript
 // in jsx
-// ...
 return (
   <NavbarDropdown>
     <NavbarDropdown.Toggle>
@@ -36,57 +35,74 @@ return (
       align="right"
     >
       <NavbarDropdown.Item
-        className="example1-dropdown-menu__item"
+        className="example1-dropdown-menu-item"
         onClick={() => alert('Item 1: clicked!')}
       >
-        Item 1
+        <div><FontAwesomeIcon icon={faUser} fixedWidth /></div>
+        <div className="example1-dropdown-menu-item__spacer" />
+        <div className="example1-dropdown-menu-item__text">Item 1</div>
       </NavbarDropdown.Item>
       <NavbarDropdown.Item
-        className="example1-dropdown-menu__item"
+        className="example1-dropdown-menu-item"
         onClick={() => alert('Item 2: clicked!')}
       >
-        Item 2
+        <div><FontAwesomeIcon icon={faBookmark} fixedWidth /></div>
+        <div className="example1-dropdown-menu-item__spacer" />
+        <div className="example1-dropdown-menu-item__text">Item 2</div>
       </NavbarDropdown.Item>
       <NavbarDropdown.Item
-        className="example1-dropdown-menu__item"
+        className="example1-dropdown-menu-item"
         onClick={() => alert('Item 3: clicked!')}
       >
-        Item 3
+        <div><FontAwesomeIcon icon={faArchive} fixedWidth /></div>
+        <div className="example1-dropdown-menu-item__spacer" />
+        <div className="example1-dropdown-menu-item__text">Item 3</div>
       </NavbarDropdown.Item>
       <NavbarDropdown.Item
-        className="example1-dropdown-menu__item"
+        className="example1-dropdown-menu-item"
         onClick={() => alert('Item 4: clicked!')}
       >
-        Item 4
+        <div><FontAwesomeIcon icon={faCog} fixedWidth /></div>
+        <div className="example1-dropdown-menu-item__spacer" />
+        <div className="example1-dropdown-menu-item__text">Item 4</div>
       </NavbarDropdown.Item>
     </NavbarDropdown.Menu>
   </NavbarDropdown>
 );
-// ...
 ```
 
 ```scss
 // in scss
-// ...
 .example1-dropdown-menu {
   display: flex;
   flex-direction: column;
   padding: 8px 0px;
-  background-color: white;
+  background-color: #FFFFFF;
   border-radius: 3px;
-  box-shadow: 0px 0px 5px #D8D9DA;
+  box-shadow: 0px 0px 5px #C3C5C7;
+}
 
-  &__item {
-    padding: 6px 32px;
-    font-size: 12px;
-    color: #383838;
+.example1-dropdown-menu-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 26px;
+  font-size: 12px;
+  color: #333537;
 
-    &:hover {
-      background-color: #F8F9FA;
-    }
+  &:hover {
+    background-color: #F3F5F7;
+  }
+
+  &__spacer {
+    width: 6px;
+  }
+
+  &__text {
+    padding: 0px 2px;
   }
 }
-// ...
 ```
 
 [Result](https://riswu.github.io/react-navbar-dropdown-examples/#/example1)
@@ -95,7 +111,6 @@ return (
 
 ```javascript
 // in jsx
-// ...
 return (
   <NavbarDropdown>
     <NavbarDropdown.Toggle>
@@ -113,75 +128,87 @@ return (
     >
       <div className="example2-dropdown-menu__row">
         <NavbarDropdown.Item
-          className="example2-dropdown-menu__item"
-          style={{ backgroundColor: 'lightblue' }}
+          className="example2-dropdown-menu-item"
           onClick={() => alert('Item 1: clicked!')}
         >
-          Item 1
+          <div className="example2-dropdown-menu-item__icon">
+            <FontAwesomeIcon icon={faUser} fixedWidth />
+          </div>
+          <div className="example2-dropdown-menu-item__text">Item 1</div>
         </NavbarDropdown.Item>
         <NavbarDropdown.Item
-          className="example2-dropdown-menu__item"
-          style={{ backgroundColor: 'lightgreen' }}
+          className="example2-dropdown-menu-item"
           onClick={() => alert('Item 2: clicked!')}
         >
-          Item 2
+          <div className="example2-dropdown-menu-item__icon">
+            <FontAwesomeIcon icon={faBookmark} fixedWidth />
+          </div>
+          <div className="example2-dropdown-menu-item__text">Item 2</div>
         </NavbarDropdown.Item>
       </div>
       <div className="example2-dropdown-menu__row">
         <NavbarDropdown.Item
-          className="example2-dropdown-menu__item"
-          style={{ backgroundColor: 'orange' }}
+          className="example2-dropdown-menu-item"
           onClick={() => alert('Item 3: clicked!')}
         >
-          Item 3
+          <div className="example2-dropdown-menu-item__icon">
+            <FontAwesomeIcon icon={faArchive} fixedWidth />
+          </div>
+          <div className="example2-dropdown-menu-item__text">Item 3</div>
         </NavbarDropdown.Item>
         <NavbarDropdown.Item
-          className="example2-dropdown-menu__item"
-          style={{ backgroundColor: 'greenyellow' }}
+          className="example2-dropdown-menu-item"
           onClick={() => alert('Item 4: clicked!')}
         >
-          Item 4
+          <div className="example2-dropdown-menu-item__icon">
+            <FontAwesomeIcon icon={faCog} fixedWidth />
+          </div>
+          <div className="example2-dropdown-menu-item__text">Item 4</div>
         </NavbarDropdown.Item>
       </div>
     </NavbarDropdown.Menu>
   </NavbarDropdown>
 );
-// ...
 ```
 
 ```scss
 // in scss
-// ...
 .example2-dropdown-menu {
   display: flex;
   flex-direction: column;
   padding: 8px 8px;
-  background-color: white;
+  background-color: #FFFFFF;
   border-radius: 3px;
-  box-shadow: 0px 0px 5px #D8D9DA;
+  box-shadow: 0px 0px 5px #C3C5C7;
 
   &__row {
     display: flex;
     flex-direction: row;
   }
+}
 
-  &__item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 4px;
-    height: 60px;
-    width: 80px;
+.example2-dropdown-menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 4px;
+  height: 60px;
+  width: 80px;
+  color: #333537;
+
+  &:hover {
+    background-color: #F3F5F7;
+  }
+
+  &__icon {
+    font-size: 20px;
+  }
+
+  &__text {
     font-size: 12px;
-    color: #383838;
-
-    &:hover {
-      box-shadow: 0px 0px 3px #D8D9DA;
-    }
   }
 }
-// ...
 ```
 
 [Result](https://riswu.github.io/react-navbar-dropdown-examples/#/example2)
