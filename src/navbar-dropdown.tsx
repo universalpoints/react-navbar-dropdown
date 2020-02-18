@@ -161,7 +161,7 @@ export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = props => {
       contextValue.handleClickOutside!();
     }
   };
-  document.addEventListener
+
   React.useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
     return () => {
