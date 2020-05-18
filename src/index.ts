@@ -4,6 +4,7 @@ import {
   NavbarDropdownOpen,
   NavbarDropdownClose,
   NavbarDropdownMenu,
+  NavbarDropdownCSSTransitionMenu,
   NavbarDropdownItem,
 } from './navbar-dropdown';
 
@@ -12,5 +13,6 @@ export default class NavbarDropdown extends NavbarDropdownMain {
   static Open = NavbarDropdownOpen;
   static Close = NavbarDropdownClose;
   static Menu = NavbarDropdownMenu;
+  static CSSTransitionMenu = NavbarDropdownCSSTransitionMenu;
   static Item = NavbarDropdownItem;
 }

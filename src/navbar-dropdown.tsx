@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 
 // TODO: Centering
-// TODO: Animation
 // TODO: Hover or Click
 
 interface NavbarDropdownContext {
@@ -49,7 +49,10 @@ export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
       return React.isValidElement(child) && child.type === NavbarDropdownToggle;
     });
     const menu = React.Children.toArray(this.props.children).find((child) => {
-      return React.isValidElement(child) && child.type === NavbarDropdownMenu;
+      return (
+        React.isValidElement(child) &&
+        (child.type === NavbarDropdownMenu || child.type === NavbarDropdownCSSTransitionMenu)
+      );
     });
 
     const contextValue = {
@@ -182,6 +185,58 @@ export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = (props) => 
       >
         {props.children}
       </div>
+    </StyledNavbarDropdownMenu>
+  );
+};
+
+type CSSTransitionProps = React.ComponentProps<typeof CSSTransition>;
+
+export type NavbarDropdownCSSTransitionMenuProps = NavbarDropdownMenuProps & CSSTransitionProps;
+
+export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransitionMenuProps> = (
+  props,
+) => {
+  let style: React.CSSProperties = {
+    top: `calc(100% + ${props.between})`,
+  };
+  if (props.align === 'left') {
+    style = Object.assign(style, { left: '0px' });
+  } else if (props.align === 'right') {
+    style = Object.assign(style, { right: '0px' });
+  }
+
+  const [inProp, setInProp] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+  const contextValue = React.useContext(ContextStore);
+  const handleClickOutside = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      contextValue.handleClickOutside!();
+    }
+  };
+
+  React.useEffect(() => {
+    setInProp(true);
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  });
+
+  const StyledNavbarDropdownMenu = styled.div`
+    position: absolute;
+    width: max-content;
+  `;
+
+  return (
+    <StyledNavbarDropdownMenu ref={ref} style={style}>
+      <CSSTransition in={inProp} {...props}>
+        <div
+          className={props.className ? props.className : ''}
+          style={props.style ? props.style : {}}
+        >
+          {props.children}
+        </div>
+      </CSSTransition>
     </StyledNavbarDropdownMenu>
   );
 };
