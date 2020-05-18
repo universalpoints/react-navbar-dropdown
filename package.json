@@ -17,12 +17,12 @@
   "repository": "https://github.com/riswu/react-navbar-dropdown",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.7.4"
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.2"
   },
   "peerDependencies": {
     "react": "^16.0.0",
@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@types/react-transition-group": "^4.2.4",
-    "@types/styled-components": "^4.4.2",
+    "@types/styled-components": "^5.1.0",
     "react-transition-group": "^4.4.1",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.1.0"
   }
 }
