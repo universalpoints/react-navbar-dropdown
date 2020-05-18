@@ -1,13 +1,13 @@
 import {
-  NavbarDropdown as _NavbarDropdown,
+  NavbarDropdown as NavbarDropdownMain,
   NavbarDropdownToggle,
   NavbarDropdownOpen,
   NavbarDropdownClose,
   NavbarDropdownMenu,
-  NavbarDropdownItem
+  NavbarDropdownItem,
 } from './navbar-dropdown';
 
-export default class NavbarDropdown extends _NavbarDropdown {
+export default class NavbarDropdown extends NavbarDropdownMain {
   static Toggle = NavbarDropdownToggle;
   static Open = NavbarDropdownOpen;
   static Close = NavbarDropdownClose;
