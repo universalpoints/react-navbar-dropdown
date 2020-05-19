@@ -95,14 +95,15 @@ const StyledNavbarDropdownOpen = styled.div`
 
 export const NavbarDropdownOpen: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
+  const { onClick, ...other } = props;
 
   return (
     <StyledNavbarDropdownOpen
       onClick={(e) => {
-        if (props.onClick) props.onClick(e);
+        if (onClick) onClick(e);
         contextValue.handleClickToggle!();
       }}
-      {...props}
+      {...other}
     >
       {props.children}
     </StyledNavbarDropdownOpen>
@@ -117,14 +118,15 @@ const StyledNavbarDropdownClose = styled.div`
 
 export const NavbarDropdownClose: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
+  const { onClick, ...other } = props;
 
   return (
     <StyledNavbarDropdownClose
       onClick={(e) => {
-        if (props.onClick) props.onClick(e);
+        if (onClick) onClick(e);
         contextValue.handleClickToggle!();
       }}
-      {...props}
+      {...other}
     >
       {props.children}
     </StyledNavbarDropdownClose>
@@ -202,14 +204,15 @@ const StyledNavbarDropdownItem = styled.div`
 
 export const NavbarDropdownItem: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
+  const { onClick, ...other } = props;
 
   return (
     <StyledNavbarDropdownItem
       onClick={(e) => {
-        if (props.onClick) props.onClick(e);
+        if (onClick) onClick(e);
         contextValue.handleClickItem!();
       }}
-      {...props}
+      {...other}
     >
       {props.children}
     </StyledNavbarDropdownItem>
