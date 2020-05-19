@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
-// TODO: Centering
-// TODO: Hover or Click
-
 interface NavbarDropdownContext {
   open: boolean;
   handleClickToggle: () => void;
@@ -13,6 +10,10 @@ interface NavbarDropdownContext {
 }
 
 const ContextStore = React.createContext<Partial<NavbarDropdownContext>>({});
+
+const StyledNavbarDropdown = styled.div`
+  position: relative;
+`;
 
 interface NavbarDropdownState {
   open: boolean;
@@ -62,15 +63,11 @@ export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
       handleClickOutside: this.handleClickOutside.bind(this),
     };
 
-    const StyledNavbarDropdown = styled.div`
-      position: relative;
-    `;
-
     return (
       <ContextStore.Provider value={contextValue}>
         <StyledNavbarDropdown>
           {toggle}
-          {this.state.open && menu}
+          {menu}
         </StyledNavbarDropdown>
       </ContextStore.Provider>
     );
@@ -90,6 +87,12 @@ export const NavbarDropdownToggle: React.FC = (props) => {
   return contextValue.open! ? (close as React.ReactElement) : (open as React.ReactElement);
 };
 
+const StyledNavbarDropdownOpen = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export interface NavbarDropdownOpenProps {
   className?: string;
   style?: React.CSSProperties;
@@ -97,12 +100,6 @@ export interface NavbarDropdownOpenProps {
 
 export const NavbarDropdownOpen: React.FC<NavbarDropdownOpenProps> = (props) => {
   const contextValue = React.useContext(ContextStore);
-
-  const StyledNavbarDropdownOpen = styled.div`
-    &:hover {
-      cursor: pointer;
-    }
-  `;
 
   return (
     <StyledNavbarDropdownOpen
@@ -115,6 +112,12 @@ export const NavbarDropdownOpen: React.FC<NavbarDropdownOpenProps> = (props) => 
   );
 };
 
+const StyledNavbarDropdownClose = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export interface NavbarDropdownCloseProps {
   className?: string;
   style?: React.CSSProperties;
@@ -122,12 +125,6 @@ export interface NavbarDropdownCloseProps {
 
 export const NavbarDropdownClose: React.FC<NavbarDropdownCloseProps> = (props) => {
   const contextValue = React.useContext(ContextStore);
-
-  const StyledNavbarDropdownClose = styled.div`
-    &:hover {
-      cursor: pointer;
-    }
-  `;
 
   return (
     <StyledNavbarDropdownClose
@@ -140,25 +137,20 @@ export const NavbarDropdownClose: React.FC<NavbarDropdownCloseProps> = (props) =
   );
 };
 
+const StyledNavbarDropdownMenu = styled.div`
+  position: absolute;
+  width: max-content;
+`;
+
 export interface NavbarDropdownMenuProps {
   className?: string;
   style?: React.CSSProperties;
-  between: string;
-  align: 'left' | 'right';
 }
 
 export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = (props) => {
-  let style: React.CSSProperties = {
-    top: `calc(100% + ${props.between})`,
-  };
-  if (props.align === 'left') {
-    style = Object.assign(style, { left: '0px' });
-  } else if (props.align === 'right') {
-    style = Object.assign(style, { right: '0px' });
-  }
+  const contextValue = React.useContext(ContextStore);
 
   const ref = React.useRef<HTMLDivElement>(null);
-  const contextValue = React.useContext(ContextStore);
   const handleClickOutside = (e: MouseEvent) => {
     if (ref.current && !ref.current.contains(e.target as Node)) {
       contextValue.handleClickOutside!();
@@ -172,20 +164,18 @@ export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = (props) => 
     };
   });
 
-  const StyledNavbarDropdownMenu = styled.div`
-    position: absolute;
-    width: max-content;
-  `;
-
   return (
-    <StyledNavbarDropdownMenu ref={ref} style={style}>
-      <div
-        className={props.className ? props.className : ''}
-        style={props.style ? props.style : {}}
-      >
-        {props.children}
-      </div>
-    </StyledNavbarDropdownMenu>
+    <>
+      {contextValue.open! && (
+        <StyledNavbarDropdownMenu
+          ref={ref}
+          className={props.className ? props.className : ''}
+          style={props.style ? props.style : {}}
+        >
+          {props.children}
+        </StyledNavbarDropdownMenu>
+      )}
+    </>
   );
 };
 
@@ -193,21 +183,10 @@ type CSSTransitionProps = React.ComponentProps<typeof CSSTransition>;
 
 export type NavbarDropdownCSSTransitionMenuProps = NavbarDropdownMenuProps & CSSTransitionProps;
 
-export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransitionMenuProps> = (
-  props,
-) => {
-  let style: React.CSSProperties = {
-    top: `calc(100% + ${props.between})`,
-  };
-  if (props.align === 'left') {
-    style = Object.assign(style, { left: '0px' });
-  } else if (props.align === 'right') {
-    style = Object.assign(style, { right: '0px' });
-  }
-
-  const [inProp, setInProp] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
+export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransitionMenuProps> = (props) => {
   const contextValue = React.useContext(ContextStore);
+
+  const ref = React.useRef<HTMLDivElement>(null);
   const handleClickOutside = (e: MouseEvent) => {
     if (ref.current && !ref.current.contains(e.target as Node)) {
       contextValue.handleClickOutside!();
@@ -215,31 +194,30 @@ export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransiti
   };
 
   React.useEffect(() => {
-    setInProp(true);
     document.addEventListener('click', handleClickOutside, true);
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
   });
 
-  const StyledNavbarDropdownMenu = styled.div`
-    position: absolute;
-    width: max-content;
-  `;
-
   return (
-    <StyledNavbarDropdownMenu ref={ref} style={style}>
-      <CSSTransition in={inProp} {...props}>
-        <div
-          className={props.className ? props.className : ''}
-          style={props.style ? props.style : {}}
-        >
-          {props.children}
-        </div>
-      </CSSTransition>
-    </StyledNavbarDropdownMenu>
+    <CSSTransition in={contextValue.open!} unmountOnExit {...props}>
+      <StyledNavbarDropdownMenu
+        ref={ref}
+        className={props.className ? props.className : ''}
+        style={props.style ? props.style : {}}
+      >
+        {props.children}
+      </StyledNavbarDropdownMenu>
+    </CSSTransition>
   );
 };
+
+const StyledNavbarDropdownItem = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export interface NavbarDropdownItemProps {
   className?: string;
@@ -249,12 +227,6 @@ export interface NavbarDropdownItemProps {
 
 export const NavbarDropdownItem: React.FC<NavbarDropdownItemProps> = (props) => {
   const contextValue = React.useContext(ContextStore);
-
-  const StyledNavbarDropdownItem = styled.div`
-    &:hover {
-      cursor: pointer;
-    }
-  `;
 
   return (
     <StyledNavbarDropdownItem
