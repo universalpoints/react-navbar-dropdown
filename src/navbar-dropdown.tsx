@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
-interface NavbarDropdownContext {
+interface NavbarDropdownContextProps {
   open: boolean;
   handleClickToggle: () => void;
   handleClickItem: () => void;
   handleClickOutside: () => void;
 }
 
-const ContextStore = React.createContext<Partial<NavbarDropdownContext>>({});
+const NavbarDropdownContext = React.createContext<Partial<NavbarDropdownContextProps>>({});
 
 const StyledNavbarDropdown = styled.div`
   position: relative;
@@ -64,12 +64,12 @@ export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
     };
 
     return (
-      <ContextStore.Provider value={contextValue}>
+      <NavbarDropdownContext.Provider value={contextValue}>
         <StyledNavbarDropdown>
           {toggle}
           {menu}
         </StyledNavbarDropdown>
-      </ContextStore.Provider>
+      </NavbarDropdownContext.Provider>
     );
   }
 }
@@ -82,7 +82,7 @@ export const NavbarDropdownToggle: React.FC = (props) => {
     return React.isValidElement(child) && child.type === NavbarDropdownClose;
   });
 
-  const contextValue = React.useContext(ContextStore);
+  const contextValue = React.useContext(NavbarDropdownContext);
 
   return contextValue.open! ? (close as React.ReactElement) : (open as React.ReactElement);
 };
@@ -94,7 +94,7 @@ const StyledNavbarDropdownOpen = styled.div`
 `;
 
 export const NavbarDropdownOpen: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const contextValue = React.useContext(ContextStore);
+  const contextValue = React.useContext(NavbarDropdownContext);
   const { onClick, ...other } = props;
 
   return (
@@ -117,7 +117,7 @@ const StyledNavbarDropdownClose = styled.div`
 `;
 
 export const NavbarDropdownClose: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const contextValue = React.useContext(ContextStore);
+  const contextValue = React.useContext(NavbarDropdownContext);
   const { onClick, ...other } = props;
 
   return (
@@ -139,7 +139,7 @@ const StyledNavbarDropdownMenu = styled.div`
 `;
 
 export const NavbarDropdownMenu: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const contextValue = React.useContext(ContextStore);
+  const contextValue = React.useContext(NavbarDropdownContext);
 
   const ref = React.useRef<HTMLDivElement>(null);
   const handleClickOutside = (e: MouseEvent) => {
@@ -171,7 +171,7 @@ type CSSTransitionProps = React.ComponentProps<typeof CSSTransition>;
 export type NavbarDropdownCSSTransitionMenuProps = React.HTMLAttributes<HTMLDivElement> & CSSTransitionProps;
 
 export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransitionMenuProps> = (props) => {
-  const contextValue = React.useContext(ContextStore);
+  const contextValue = React.useContext(NavbarDropdownContext);
 
   const ref = React.useRef<HTMLDivElement>(null);
   const handleClickOutside = (e: MouseEvent) => {
@@ -203,7 +203,7 @@ const StyledNavbarDropdownItem = styled.div`
 `;
 
 export const NavbarDropdownItem: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const contextValue = React.useContext(ContextStore);
+  const contextValue = React.useContext(NavbarDropdownContext);
   const { onClick, ...other } = props;
 
   return (
