@@ -29,44 +29,40 @@ return (
         <FontAwesomeIcon icon={faCaretUp} fixedWidth />
       </NavbarDropdown.Close>
     </NavbarDropdown.Toggle>
-    <NavbarDropdown.Menu
+    <NavbarDropdown.CSSTransitionMenu
       className="example1-dropdown-menu"
-      between="4px"
-      align="right"
+      classNames="example1-dropdown-menu"
+      timeout={200}
     >
-      <NavbarDropdown.Item
-        className="example1-dropdown-menu-item"
-        onClick={() => alert('Item 1: clicked!')}
-      >
-        <div><FontAwesomeIcon icon={faUser} fixedWidth /></div>
+      <NavbarDropdown.Item className="example1-dropdown-menu-item" onClick={() => alert('Item 1: clicked!')}>
+        <div>
+          <FontAwesomeIcon icon={faUser} fixedWidth />
+        </div>
         <div className="example1-dropdown-menu-item__spacer" />
         <div className="example1-dropdown-menu-item__text">Item 1</div>
       </NavbarDropdown.Item>
-      <NavbarDropdown.Item
-        className="example1-dropdown-menu-item"
-        onClick={() => alert('Item 2: clicked!')}
-      >
-        <div><FontAwesomeIcon icon={faBookmark} fixedWidth /></div>
+      <NavbarDropdown.Item className="example1-dropdown-menu-item" onClick={() => alert('Item 2: clicked!')}>
+        <div>
+          <FontAwesomeIcon icon={faBookmark} fixedWidth />
+        </div>
         <div className="example1-dropdown-menu-item__spacer" />
         <div className="example1-dropdown-menu-item__text">Item 2</div>
       </NavbarDropdown.Item>
-      <NavbarDropdown.Item
-        className="example1-dropdown-menu-item"
-        onClick={() => alert('Item 3: clicked!')}
-      >
-        <div><FontAwesomeIcon icon={faArchive} fixedWidth /></div>
+      <NavbarDropdown.Item className="example1-dropdown-menu-item" onClick={() => alert('Item 3: clicked!')}>
+        <div>
+          <FontAwesomeIcon icon={faArchive} fixedWidth />
+        </div>
         <div className="example1-dropdown-menu-item__spacer" />
         <div className="example1-dropdown-menu-item__text">Item 3</div>
       </NavbarDropdown.Item>
-      <NavbarDropdown.Item
-        className="example1-dropdown-menu-item"
-        onClick={() => alert('Item 4: clicked!')}
-      >
-        <div><FontAwesomeIcon icon={faCog} fixedWidth /></div>
+      <NavbarDropdown.Item className="example1-dropdown-menu-item" onClick={() => alert('Item 4: clicked!')}>
+        <div>
+          <FontAwesomeIcon icon={faCog} fixedWidth />
+        </div>
         <div className="example1-dropdown-menu-item__spacer" />
         <div className="example1-dropdown-menu-item__text">Item 4</div>
       </NavbarDropdown.Item>
-    </NavbarDropdown.Menu>
+    </NavbarDropdown.CSSTransitionMenu>
   </NavbarDropdown>
 );
 ```
@@ -76,10 +72,30 @@ return (
 .example1-dropdown-menu {
   display: flex;
   flex-direction: column;
+  top: 28px;
+  right: 0;
   padding: 8px 0px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0px 0px 5px #C3C5C7;
+  box-shadow: 0px 0px 5px #c3c5c7;
+
+  &-enter {
+    opacity: 0;
+  }
+
+  &-enter-active {
+    opacity: 1;
+    transition: 0.2s ease-in;
+  }
+
+  &-exit {
+    opacity: 1;
+  }
+
+  &-exit-active {
+    opacity: 0;
+    transition: 0.2s ease-in;
+  }
 }
 
 .example1-dropdown-menu-item {
@@ -92,7 +108,7 @@ return (
   color: #333537;
 
   &:hover {
-    background-color: #F3F5F7;
+    background-color: #f3f5f7;
   }
 
   &__spacer {
@@ -121,25 +137,15 @@ return (
         <FontAwesomeIcon icon={faTimes} fixedWidth />
       </NavbarDropdown.Close>
     </NavbarDropdown.Toggle>
-    <NavbarDropdown.Menu
-      className="example2-dropdown-menu"
-      between="4px"
-      align="right"
-    >
+    <NavbarDropdown.Menu className="example2-dropdown-menu">
       <div className="example2-dropdown-menu__row">
-        <NavbarDropdown.Item
-          className="example2-dropdown-menu-item"
-          onClick={() => alert('Item 1: clicked!')}
-        >
+        <NavbarDropdown.Item className="example2-dropdown-menu-item" onClick={() => alert('Item 1: clicked!')}>
           <div className="example2-dropdown-menu-item__icon">
             <FontAwesomeIcon icon={faUser} fixedWidth />
           </div>
           <div className="example2-dropdown-menu-item__text">Item 1</div>
         </NavbarDropdown.Item>
-        <NavbarDropdown.Item
-          className="example2-dropdown-menu-item"
-          onClick={() => alert('Item 2: clicked!')}
-        >
+        <NavbarDropdown.Item className="example2-dropdown-menu-item" onClick={() => alert('Item 2: clicked!')}>
           <div className="example2-dropdown-menu-item__icon">
             <FontAwesomeIcon icon={faBookmark} fixedWidth />
           </div>
@@ -147,19 +153,13 @@ return (
         </NavbarDropdown.Item>
       </div>
       <div className="example2-dropdown-menu__row">
-        <NavbarDropdown.Item
-          className="example2-dropdown-menu-item"
-          onClick={() => alert('Item 3: clicked!')}
-        >
+        <NavbarDropdown.Item className="example2-dropdown-menu-item" onClick={() => alert('Item 3: clicked!')}>
           <div className="example2-dropdown-menu-item__icon">
             <FontAwesomeIcon icon={faArchive} fixedWidth />
           </div>
           <div className="example2-dropdown-menu-item__text">Item 3</div>
         </NavbarDropdown.Item>
-        <NavbarDropdown.Item
-          className="example2-dropdown-menu-item"
-          onClick={() => alert('Item 4: clicked!')}
-        >
+        <NavbarDropdown.Item className="example2-dropdown-menu-item" onClick={() => alert('Item 4: clicked!')}>
           <div className="example2-dropdown-menu-item__icon">
             <FontAwesomeIcon icon={faCog} fixedWidth />
           </div>
@@ -176,10 +176,12 @@ return (
 .example2-dropdown-menu {
   display: flex;
   flex-direction: column;
+  top: 28px;
+  right: 0;
   padding: 8px 8px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0px 0px 5px #C3C5C7;
+  box-shadow: 0px 0px 5px #c3c5c7;
 
   &__row {
     display: flex;
@@ -198,7 +200,7 @@ return (
   color: #333537;
 
   &:hover {
-    background-color: #F3F5F7;
+    background-color: #f3f5f7;
   }
 
   &__icon {
