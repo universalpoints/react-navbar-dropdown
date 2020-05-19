@@ -93,19 +93,16 @@ const StyledNavbarDropdownOpen = styled.div`
   }
 `;
 
-export interface NavbarDropdownOpenProps {
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export const NavbarDropdownOpen: React.FC<NavbarDropdownOpenProps> = (props) => {
+export const NavbarDropdownOpen: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
 
   return (
     <StyledNavbarDropdownOpen
-      className={props.className ? props.className : ''}
-      style={props.style ? props.style : {}}
-      onClick={() => contextValue.handleClickToggle!()}
+      onClick={(e) => {
+        if (props.onClick) props.onClick(e);
+        contextValue.handleClickToggle!();
+      }}
+      {...props}
     >
       {props.children}
     </StyledNavbarDropdownOpen>
@@ -118,19 +115,16 @@ const StyledNavbarDropdownClose = styled.div`
   }
 `;
 
-export interface NavbarDropdownCloseProps {
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export const NavbarDropdownClose: React.FC<NavbarDropdownCloseProps> = (props) => {
+export const NavbarDropdownClose: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
 
   return (
     <StyledNavbarDropdownClose
-      className={props.className ? props.className : ''}
-      style={props.style ? props.style : {}}
-      onClick={() => contextValue.handleClickToggle!()}
+      onClick={(e) => {
+        if (props.onClick) props.onClick(e);
+        contextValue.handleClickToggle!();
+      }}
+      {...props}
     >
       {props.children}
     </StyledNavbarDropdownClose>
@@ -142,12 +136,7 @@ const StyledNavbarDropdownMenu = styled.div`
   width: max-content;
 `;
 
-export interface NavbarDropdownMenuProps {
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = (props) => {
+export const NavbarDropdownMenu: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -167,11 +156,7 @@ export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = (props) => 
   return (
     <>
       {contextValue.open! && (
-        <StyledNavbarDropdownMenu
-          ref={ref}
-          className={props.className ? props.className : ''}
-          style={props.style ? props.style : {}}
-        >
+        <StyledNavbarDropdownMenu ref={ref} {...props}>
           {props.children}
         </StyledNavbarDropdownMenu>
       )}
@@ -181,7 +166,7 @@ export const NavbarDropdownMenu: React.FC<NavbarDropdownMenuProps> = (props) => 
 
 type CSSTransitionProps = React.ComponentProps<typeof CSSTransition>;
 
-export type NavbarDropdownCSSTransitionMenuProps = NavbarDropdownMenuProps & CSSTransitionProps;
+export type NavbarDropdownCSSTransitionMenuProps = React.HTMLAttributes<HTMLDivElement> & CSSTransitionProps;
 
 export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransitionMenuProps> = (props) => {
   const contextValue = React.useContext(ContextStore);
@@ -202,11 +187,7 @@ export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransiti
 
   return (
     <CSSTransition in={contextValue.open!} unmountOnExit {...props}>
-      <StyledNavbarDropdownMenu
-        ref={ref}
-        className={props.className ? props.className : ''}
-        style={props.style ? props.style : {}}
-      >
+      <StyledNavbarDropdownMenu ref={ref} {...props}>
         {props.children}
       </StyledNavbarDropdownMenu>
     </CSSTransition>
@@ -219,23 +200,16 @@ const StyledNavbarDropdownItem = styled.div`
   }
 `;
 
-export interface NavbarDropdownItemProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: (e: React.MouseEvent) => void;
-}
-
-export const NavbarDropdownItem: React.FC<NavbarDropdownItemProps> = (props) => {
+export const NavbarDropdownItem: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(ContextStore);
 
   return (
     <StyledNavbarDropdownItem
-      className={props.className ? props.className : ''}
-      style={props.style ? props.style : {}}
       onClick={(e) => {
         if (props.onClick) props.onClick(e);
         contextValue.handleClickItem!();
       }}
+      {...props}
     >
       {props.children}
     </StyledNavbarDropdownItem>
