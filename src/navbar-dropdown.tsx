@@ -6,12 +6,12 @@ interface NavbarDropdownContextProps {
   open: boolean;
   handleClickToggle: () => void;
   handleClickItem: () => void;
-  handleClickOutside: () => void;
 }
 
 const NavbarDropdownContext = React.createContext<Partial<NavbarDropdownContextProps>>({});
 
 const StyledNavbarDropdown = styled.div`
+  display: inline-block;
   position: relative;
 `;
 
@@ -19,33 +19,45 @@ interface NavbarDropdownState {
   open: boolean;
 }
 
-export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
-  constructor(props: {}) {
+export class NavbarDropdown extends React.Component<React.HTMLAttributes<HTMLDivElement>, NavbarDropdownState> {
+  private ref = React.createRef<HTMLDivElement>();
+
+  constructor(props: React.HTMLAttributes<HTMLDivElement>) {
     super(props);
-    this.state = {
-      open: false,
-    };
+    this.state = { open: false };
+    this.handleClickToggle = this.handleClickToggle.bind(this);
+    this.handleClickItem = this.handleClickItem.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   handleClickToggle() {
-    this.setState((prevState) => ({
-      open: !prevState.open,
-    }));
+    this.setState({ open: !this.state.open });
   }
 
   handleClickItem() {
-    this.setState({
-      open: false,
-    });
+    this.setState({ open: false });
   }
 
-  handleClickOutside() {
-    this.setState({
-      open: false,
-    });
+  handleClickOutside(e: MouseEvent) {
+    if (this.state.open) {
+      if (this.ref.current && !this.ref.current.contains(e.target as Node)) {
+        this.setState({ open: false });
+        e.stopPropagation();
+      }
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleClickOutside, true);
   }
 
   render() {
+    const contextValue = {
+      open: this.state.open,
+      handleClickToggle: this.handleClickToggle,
+      handleClickItem: this.handleClickItem,
+    };
+
     const toggle = React.Children.toArray(this.props.children).find((child) => {
       return React.isValidElement(child) && child.type === NavbarDropdownToggle;
     });
@@ -56,16 +68,9 @@ export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
       );
     });
 
-    const contextValue = {
-      open: this.state.open,
-      handleClickToggle: this.handleClickToggle.bind(this),
-      handleClickItem: this.handleClickItem.bind(this),
-      handleClickOutside: this.handleClickOutside.bind(this),
-    };
-
     return (
       <NavbarDropdownContext.Provider value={contextValue}>
-        <StyledNavbarDropdown>
+        <StyledNavbarDropdown ref={this.ref} {...this.props}>
           {toggle}
           {menu}
         </StyledNavbarDropdown>
@@ -74,7 +79,10 @@ export class NavbarDropdown extends React.Component<{}, NavbarDropdownState> {
   }
 }
 
-export const NavbarDropdownToggle: React.FC = (props) => {
+export const NavbarDropdownToggle: React.FC<React.HTMLAttributes<HTMLButtonElement>> = (props) => {
+  const contextValue = React.useContext(NavbarDropdownContext);
+  const { onClick, ...other } = props;
+
   const open = React.Children.toArray(props.children).find((child) => {
     return React.isValidElement(child) && child.type === NavbarDropdownOpen;
   });
@@ -82,55 +90,25 @@ export const NavbarDropdownToggle: React.FC = (props) => {
     return React.isValidElement(child) && child.type === NavbarDropdownClose;
   });
 
-  const contextValue = React.useContext(NavbarDropdownContext);
-
-  return contextValue.open! ? (close as React.ReactElement) : (open as React.ReactElement);
-};
-
-const StyledNavbarDropdownOpen = styled.div`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const NavbarDropdownOpen: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const contextValue = React.useContext(NavbarDropdownContext);
-  const { onClick, ...other } = props;
-
   return (
-    <StyledNavbarDropdownOpen
+    <button
       onClick={(e) => {
         if (onClick) onClick(e);
         contextValue.handleClickToggle!();
       }}
       {...other}
     >
-      {props.children}
-    </StyledNavbarDropdownOpen>
+      {contextValue.open! ? close : open}
+    </button>
   );
 };
 
-const StyledNavbarDropdownClose = styled.div`
-  &:hover {
-    cursor: pointer;
-  }
-`;
+export const NavbarDropdownOpen: React.FC = (props) => {
+  return <>{props.children}</>;
+};
 
-export const NavbarDropdownClose: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const contextValue = React.useContext(NavbarDropdownContext);
-  const { onClick, ...other } = props;
-
-  return (
-    <StyledNavbarDropdownClose
-      onClick={(e) => {
-        if (onClick) onClick(e);
-        contextValue.handleClickToggle!();
-      }}
-      {...other}
-    >
-      {props.children}
-    </StyledNavbarDropdownClose>
-  );
+export const NavbarDropdownClose: React.FC = (props) => {
+  return <>{props.children}</>;
 };
 
 const StyledNavbarDropdownMenu = styled.div`
@@ -140,58 +118,17 @@ const StyledNavbarDropdownMenu = styled.div`
 
 export const NavbarDropdownMenu: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(NavbarDropdownContext);
-
-  const ref = React.useRef<HTMLDivElement>(null);
-  const handleClickOutside = (e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
-      contextValue.handleClickOutside!();
-    }
-  };
-
-  React.useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  });
-
-  return (
-    <>
-      {contextValue.open! && (
-        <StyledNavbarDropdownMenu ref={ref} {...props}>
-          {props.children}
-        </StyledNavbarDropdownMenu>
-      )}
-    </>
-  );
+  return <>{contextValue.open! && <StyledNavbarDropdownMenu {...props}>{props.children}</StyledNavbarDropdownMenu>}</>;
 };
 
 type CSSTransitionProps = React.ComponentProps<typeof CSSTransition>;
-
 export type NavbarDropdownCSSTransitionMenuProps = React.HTMLAttributes<HTMLDivElement> & CSSTransitionProps;
 
 export const NavbarDropdownCSSTransitionMenu: React.FC<NavbarDropdownCSSTransitionMenuProps> = (props) => {
   const contextValue = React.useContext(NavbarDropdownContext);
-
-  const ref = React.useRef<HTMLDivElement>(null);
-  const handleClickOutside = (e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
-      contextValue.handleClickOutside!();
-    }
-  };
-
-  React.useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  });
-
   return (
     <CSSTransition in={contextValue.open!} unmountOnExit {...props}>
-      <StyledNavbarDropdownMenu ref={ref} {...props}>
-        {props.children}
-      </StyledNavbarDropdownMenu>
+      <StyledNavbarDropdownMenu {...props}>{props.children}</StyledNavbarDropdownMenu>
     </CSSTransition>
   );
 };
@@ -205,7 +142,6 @@ const StyledNavbarDropdownItem = styled.div`
 export const NavbarDropdownItem: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const contextValue = React.useContext(NavbarDropdownContext);
   const { onClick, ...other } = props;
-
   return (
     <StyledNavbarDropdownItem
       onClick={(e) => {

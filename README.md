@@ -21,11 +21,11 @@ $ yarn add react-navbar-dropdown
 // in jsx
 return (
   <NavbarDropdown>
-    <NavbarDropdown.Toggle>
-      <NavbarDropdown.Open className="menu__item">
+    <NavbarDropdown.Toggle className="menu__item">
+      <NavbarDropdown.Open>
         <FontAwesomeIcon icon={faCaretDown} fixedWidth />
       </NavbarDropdown.Open>
-      <NavbarDropdown.Close className="menu__item">
+      <NavbarDropdown.Close>
         <FontAwesomeIcon icon={faCaretUp} fixedWidth />
       </NavbarDropdown.Close>
     </NavbarDropdown.Toggle>
@@ -129,11 +129,11 @@ return (
 // in jsx
 return (
   <NavbarDropdown>
-    <NavbarDropdown.Toggle>
-      <NavbarDropdown.Open className="menu__item">
+    <NavbarDropdown.Toggle className="menu__item">
+      <NavbarDropdown.Open>
         <FontAwesomeIcon icon={faTh} fixedWidth />
       </NavbarDropdown.Open>
-      <NavbarDropdown.Close className="menu__item">
+      <NavbarDropdown.Close>
         <FontAwesomeIcon icon={faTimes} fixedWidth />
       </NavbarDropdown.Close>
     </NavbarDropdown.Toggle>
