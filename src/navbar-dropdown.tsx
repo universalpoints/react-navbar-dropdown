@@ -67,11 +67,11 @@ export class NavbarDropdown extends React.Component<React.HTMLAttributes<HTMLDiv
   }
 }
 
-export const NavbarDropdownToggle: React.FC<React.HTMLAttributes<HTMLButtonElement>> = (props) => {
+export const NavbarDropdownToggle: React.FC<React.HTMLAttributes<HTMLSpanElement>> = (props) => {
   const contextValue = React.useContext(NavbarDropdownContext);
   const { onClick, ...other } = props;
   return (
-    <button
+    <span
       onClick={(e) => {
         if (onClick) onClick(e);
         contextValue.handleClickToggle!();
@@ -79,7 +79,7 @@ export const NavbarDropdownToggle: React.FC<React.HTMLAttributes<HTMLButtonEleme
       {...other}
     >
       {props.children}
-    </button>
+    </span>
   );
 };
 
