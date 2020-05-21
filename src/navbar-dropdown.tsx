@@ -57,22 +57,10 @@ export class NavbarDropdown extends React.Component<React.HTMLAttributes<HTMLDiv
       handleClickToggle: this.handleClickToggle,
       handleClickItem: this.handleClickItem,
     };
-
-    const toggle = React.Children.toArray(this.props.children).find((child) => {
-      return React.isValidElement(child) && child.type === NavbarDropdownToggle;
-    });
-    const menu = React.Children.toArray(this.props.children).find((child) => {
-      return (
-        React.isValidElement(child) &&
-        (child.type === NavbarDropdownMenu || child.type === NavbarDropdownCSSTransitionMenu)
-      );
-    });
-
     return (
       <NavbarDropdownContext.Provider value={contextValue}>
         <StyledNavbarDropdown ref={this.ref} {...this.props}>
-          {toggle}
-          {menu}
+          {this.props.children}
         </StyledNavbarDropdown>
       </NavbarDropdownContext.Provider>
     );
@@ -82,14 +70,6 @@ export class NavbarDropdown extends React.Component<React.HTMLAttributes<HTMLDiv
 export const NavbarDropdownToggle: React.FC<React.HTMLAttributes<HTMLButtonElement>> = (props) => {
   const contextValue = React.useContext(NavbarDropdownContext);
   const { onClick, ...other } = props;
-
-  const open = React.Children.toArray(props.children).find((child) => {
-    return React.isValidElement(child) && child.type === NavbarDropdownOpen;
-  });
-  const close = React.Children.toArray(props.children).find((child) => {
-    return React.isValidElement(child) && child.type === NavbarDropdownClose;
-  });
-
   return (
     <button
       onClick={(e) => {
@@ -98,17 +78,19 @@ export const NavbarDropdownToggle: React.FC<React.HTMLAttributes<HTMLButtonEleme
       }}
       {...other}
     >
-      {contextValue.open! ? close : open}
+      {props.children}
     </button>
   );
 };
 
 export const NavbarDropdownOpen: React.FC = (props) => {
-  return <>{props.children}</>;
+  const contextValue = React.useContext(NavbarDropdownContext);
+  return <>{!contextValue.open! && props.children}</>;
 };
 
 export const NavbarDropdownClose: React.FC = (props) => {
-  return <>{props.children}</>;
+  const contextValue = React.useContext(NavbarDropdownContext);
+  return <>{contextValue.open! && props.children}</>;
 };
 
 const StyledNavbarDropdownMenu = styled.div`
