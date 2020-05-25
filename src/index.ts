@@ -6,6 +6,7 @@ import {
   NavbarDropdownMenu,
   NavbarDropdownCSSTransitionMenu,
   NavbarDropdownItem,
+  NavbarDropdownCSSTransitionMenuProps,
 } from './navbar-dropdown';
 
 export default class NavbarDropdown extends NavbarDropdownMain {
@@ -16,3 +17,5 @@ export default class NavbarDropdown extends NavbarDropdownMain {
   static CSSTransitionMenu = NavbarDropdownCSSTransitionMenu;
   static Item = NavbarDropdownItem;
 }
+
+export { NavbarDropdownCSSTransitionMenuProps };
