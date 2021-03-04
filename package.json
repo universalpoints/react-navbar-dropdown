@@ -14,7 +14,7 @@
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
-  "repository": "https://github.com/riswu/react-navbar-dropdown",
+  "repository": "https://github.com/universalpoints/react-navbar-dropdown",
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^16.9.35",
